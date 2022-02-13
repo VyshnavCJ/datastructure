@@ -1,10 +1,13 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<stack>
+using namespace std;
 
 typedef struct node1{
     int data;
     struct node1*link;
 }node;
+
 
 node* CreateNode(int n){
     node* header = (node*) malloc(sizeof(node));
@@ -123,7 +126,7 @@ void InsertNode(node* header, int pos, int data){
     }
 }
 
-node* ReverseNode(node* header){
+void ReverseNode(node* header){
     node* current,*prev,*next;
     current = header->link;
     prev = NULL;
@@ -134,7 +137,6 @@ node* ReverseNode(node* header){
         current = next;
     }
     header->link=prev;
-    return header;
 }
 
 node* reverserec(node* header){
@@ -146,6 +148,25 @@ node* reverserec(node* header){
     header->link=NULL;
     return temp;
 
+}
+
+void reverseusingstack(node* header){
+    if(header->link == NULL) return;
+    stack<node*> S;
+    node* temp = header->link;
+    while(temp!=NULL){
+        S.push(temp);
+        temp = temp->link;
+    }
+    header->link = S.top();
+    temp = header->link;
+    S.pop();
+    while(!S.empty()){
+        temp->link = S.top();
+        S.pop();
+        temp = temp->link;
+    }
+    temp->link = NULL;
 }
 
 
@@ -160,10 +181,10 @@ int main()
     int y;
     char c;
     int option;
-    printf("Operations\n1 - Deletion from the front\n2 - Deletion from the end\n3 - Deletion from any position\n4 - Insertion from the front\n5 - Insetion from the end\n6 - Insertion from any position\n7 - Display\n8 - Reverse the list\n9 - Reverse the list through recursion\n");
+    printf("Operations\n1 - Deletion from the front\n2 - Deletion from the end\n3 - Deletion from any position\n4 - Insertion from the front\n5 - Insetion from the end\n6 - Insertion from any position\n7 - Display\n8 - Reverse the list\n9 - Reverse the list through recursion\n10 - Reverse list using stack\n");
     do
     {
-        printf("Enter(1 2 3 4 5 6 7 8 9) :");
+        printf("Enter(1 2 3 4 5 6 7 8 9 10) :");
         scanf("%d", &option);
         switch (option)
         {
@@ -201,7 +222,10 @@ int main()
             ReverseNode(header);
             break;
         case 9:
-            reverserec(header);
+            header = reverserec(header);
+            break;
+        case 10:
+            reverseusingstack(header);
             break;
         default:
             printf("Wrong option");
