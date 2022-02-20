@@ -1,5 +1,5 @@
 #include<stdio.h>
-#define SIZE 5
+#define SIZE 3
 
 int Q[SIZE], FRONT = -1, REAR = -1;
 
@@ -34,14 +34,14 @@ void dequeue()
     {
         item = Q[FRONT];
         if (FRONT == REAR)
-    {
-        FRONT = -1;
-        REAR = -1;
-    }
-    else
-    {
-        FRONT++;
-    }
+        {
+            FRONT = -1;
+            REAR = -1;
+        }
+        else
+        {
+            FRONT++;
+        }
         printf("The deleted element is : %d\n",item);
     }
 }
