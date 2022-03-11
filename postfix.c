@@ -81,6 +81,6 @@ push(result);
 item=postfix[++i];
 }
 double value=pop();
-printf("The result of postfix expresionis %f\n",value);
+printf("The result of postfix expression is %f\n",value);
 return 0;
 }

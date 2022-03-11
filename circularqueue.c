@@ -21,7 +21,7 @@ int main()
         scanf("%c",&ch);
         switch (ch)
         {
-            case 'a': printf("Enter the no: to be inserted : ");
+            case 'a': printf("Enter the no. to be inserted : ");
             scanf("%d",&n);
             insertcq(n);
             break;
@@ -93,10 +93,10 @@ void displaycq(void)
         printf("FRONT : %d\n",F);
         printf("REAR : %d\n",R);
         printf("Elements are : ");
-        for ( i = F; i != R; i = (i+1)%SIZE)
+        for ( i = F; i <= R; i = (i+1)%SIZE)
         {
             printf("%d\t",CQ[i]);
         }
-        printf("%d\n",CQ[R]);
+        printf("\n");
     }
 }
