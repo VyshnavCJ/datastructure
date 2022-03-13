@@ -1,5 +1,7 @@
 #include<stdio.h>
 #include<string.h>
+#include<iostream>
+using namespace std;
 #define SIZE 100
 int top=-1,stack[SIZE];
 void push(double x)
@@ -21,7 +23,7 @@ double pop()
        return  stack[top--];
      }
   }
-double operator(char c,double x,double y)
+double operation(char c,double x,double y)
 {
 double result;
 switch(c)
@@ -55,32 +57,31 @@ int check(char c)
 }
 int main()
 { 
-printf("Enter the postfix expression: ");
-char postfix[100];
-scanf("%s",postfix);
-int n=strlen(postfix);
-postfix[n]='#';
-int i=0;
-char item=postfix[0];
+printf("Enter the prefix expression: ");
+char prefix[100];
+scanf("%s",prefix);
+int n=strlen(prefix)-1;
+char item;
 char op;
 double result;
 double x,y;
-while(item!='#')
+while(n!=-1)
 {
+    item=prefix[n];
   if(check(item)){
    push(item-'0');
-}
+  }
 else
 {
 op=item;
-y=pop();
 x=pop();
-result=operator(op,x,y);
+y=pop();
+result=operation(op,x,y);
 push(result);
 }
-item=postfix[++i];
+n--;
 }
 double value=pop();
-printf("The result of postfix expression is %f\n",value);
+printf("The result of prefix expression is %f\n",value);
 return 0;
 }
