@@ -73,6 +73,17 @@ int max(bst* node){
     return node->data;
 }
 
+bst* max_node(bst* node){
+    if(node==NULL){
+        cout << "The tree is empty" << endl;
+        return NULL;
+    }
+    while(node->Rchild!=NULL){
+        node = node->Rchild;
+    }
+    return node;
+}
+
 int min(bst* node){
     if(node==NULL){
         cout << "The tree is empty" << endl;
@@ -225,6 +236,27 @@ bst* inorder_succesor(bst* root, int data){
     }
 }
 
+bst* inorder_predecessor(bst* root, int data){
+    bst* current = find(root,data);
+    if(current==NULL) return NULL;
+    if(current->Lchild!=NULL){
+        return max_node(current->Lchild);
+    }else{
+        bst* predecessor = NULL;
+        bst* ancestor = root;
+        while(ancestor!=current){
+            if(current->data > ancestor->data){
+                predecessor = ancestor;
+                ancestor  = ancestor->Rchild;
+            }else 
+                ancestor = ancestor->Lchild;
+        }
+        return predecessor;
+    }
+}
+
+
+
 
 
 int main(){
@@ -268,7 +300,10 @@ int main(){
         cout<<"Not binarysearchtree" << endl;
     root = Delete(root,25);
     Inorder_rec(root);
-    bst* temp = inorder_succesor(root,25);
+    bst* temp = inorder_succesor(root,12);
     if(temp!=NULL)
         cout <<"\nInorder succesor of 12 is "<< temp->data << endl;
+    temp = inorder_predecessor(root,12);
+    if(temp!=NULL)
+        cout <<"\nInorder Predecessor of 12 is "<< temp->data << endl;
 }
