@@ -170,12 +170,12 @@ int main(){
 	printf("\nPostorder Traversal: ");
 	Postorder_rec(ROOT);
 	printf("\n");
-        //Postorder();
-        printf("\n");
+     //Postorder();
+    printf("\n");
 	printf("\nInorder Traversal: ");
 	Inorder_rec(ROOT);
 	printf("\n");
-        //Inorder();
-        printf("\n");
+    //Inorder();
+    printf("\n");
 
 }
