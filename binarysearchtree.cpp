@@ -118,29 +118,48 @@ void level_order_traversal(bst* node){ //breadth first traversal
     }
     
 }
-bool IsSubtreelesser(bst* root,int value){
-    if(root==NULL) return true;
-    if(root->data <= value && IsSubtreelesser(root->Lchild,value) && IsSubtreelesser(root->Rchild,value))
-        return true;
-    else
-        return false;
-}
+//method 1 to check bt is bst
+// bool IsSubtreelesser(bst* root,int value){
+//     if(root==NULL) return true;
+//     if(root->data <= value && IsSubtreelesser(root->Lchild,value) && IsSubtreelesser(root->Rchild,value))
+//         return true;
+//     else
+//         return false;
+// }
 
-bool IsSubtreeGreater(bst* root,int value){
+// bool IsSubtreeGreater(bst* root,int value){
+//     if(root==NULL) return true;
+//     if(root->data > value && IsSubtreeGreater(root->Lchild,value) && IsSubtreeGreater(root->Rchild,value))
+//         return true;
+//     else
+//         return false;
+// }
+
+// bool IsBinarysearch(bst* root){
+//     if(root==NULL) return true;
+//     if(IsSubtreelesser(root->Lchild,root->data) && IsSubtreeGreater(root->Rchild,root->data) && IsBinarysearch(root->Lchild) && IsBinarysearch(root->Rchild))
+//         return true;
+//     else
+//         return false;
+// }
+
+//method 2 to check bt is bst
+
+
+bool IsBSTutil(bst* root, int minvalue,int maxvalue){
     if(root==NULL) return true;
-    if(root->data > value && IsSubtreeGreater(root->Lchild,value) && IsSubtreeGreater(root->Rchild,value))
+    if(root->data > minvalue  && root->data < maxvalue && IsBSTutil(root->Lchild,minvalue,root->data) && IsBSTutil(root->Rchild,root->data,maxvalue))
         return true;
     else
         return false;
 }
 
 bool IsBinarysearch(bst* root){
-    if(root==NULL) return true;
-    if(IsSubtreelesser(root->Lchild,root->data) && IsSubtreeGreater(root->Rchild,root->data) && IsBinarysearch(root->Lchild) && IsBinarysearch(root->Rchild))
-        return true;
-    else
-        return false;
+    return IsBSTutil(root , INT_MIN, INT_MAX);
 }
+
+
+
 
 int main(){
     root = NULL;
