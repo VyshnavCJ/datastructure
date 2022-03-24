@@ -1,7 +1,9 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<queue>
 #define SIZE 1000
 
+using namespace std;
 
 typedef  struct bin{
 	struct bin* Lchild;
@@ -18,7 +20,7 @@ BT* GetNode(){
 	temp->Rchild=NULL;
 	return temp;
 }
-/*
+
 int top=-1;
 BT* stack[SIZE];
 
@@ -32,18 +34,20 @@ void push(BT* x )
 
 BT* pop()
 {
-        if(top==-1)
+        if(top==-1){
                 printf("Stack underflow\n");
+				return NULL;
+		}
         else
         {
                 return stack[top];
                 top--;
         }
 }
-*/
 
 
-binarytree_creation(BT* bt, char data){
+
+void binarytree_creation(BT* bt, char data){
 	if(bt!=NULL){
 		bt->data = data;
 		A:
@@ -110,7 +114,7 @@ void Inorder_rec(BT* ptr){
                 Inorder_rec(ptr->Rchild);
         }
 }
-/*void Inorder(){
+void Inorder(){
 	BT* ptr = ROOT;
 	while(ptr!=NULL || top > -1){
 		while(ptr!=NULL){
@@ -152,7 +156,31 @@ void Postorder(){
                 }
         }
 }
-*/
+
+void insert(BT* ptr,char data){
+	BT* temp;
+	queue<BT*> q;
+	q.push(ptr);
+	while(!q.empty()){
+		temp = q.front();
+		q.pop();
+		if(temp->Lchild!=NULL){
+			q.push(temp->Lchild);
+		}else{
+			temp->Lchild = GetNode();
+			temp->Lchild->data = data;
+			break;
+		}
+		if(temp->Rchild!=NULL){
+			q.push(temp->Rchild);
+		}else{
+			temp->Rchild = GetNode();
+			temp->Rchild->data = data;
+			break;
+		}
+	}
+}
+
 int main(){
 	printf("Creating Binary tree-------\n");
 	printf("Creating root node\n");
@@ -160,7 +188,7 @@ int main(){
 	ROOT = GetNode();
 	char data;
 	scanf("%c",&data);
-	printf("Creating Subtrees\n: ");
+	printf("Creating Subtrees: \n");
 	binarytree_creation(ROOT,data);
 	printf("\nPreorder Traversal: ");
 	Preorder_rec(ROOT);
@@ -177,5 +205,8 @@ int main(){
 	printf("\n");
     //Inorder();
     printf("\n");
+	printf("\nInorder Traversal after insertion: ");
+	insert(ROOT,'f');
+	Inorder_rec(ROOT);
 
 }
