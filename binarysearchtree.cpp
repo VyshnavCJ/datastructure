@@ -35,7 +35,7 @@ bst* insert(bst* node ,int n){
 void Inorder_rec(bst* ptr){
         if(ptr!=NULL){ 
             Inorder_rec(ptr->Lchild);
-		    cout << ptr->data << endl;
+		    cout << ptr->data << " ";
             Inorder_rec(ptr->Rchild);
         }
 }
@@ -49,6 +49,17 @@ bool search(bst*node,int x){
         node = node->Rchild;
         return search(node,x);
     }else return true;
+}
+
+bst* find(bst*node,int x){
+    if(node==NULL) return NULL;
+    else if(node->data>x){
+        node = node->Lchild;
+        return find(node,x);
+    }else if(node->data<x){
+        node = node->Rchild;
+        return find(node,x);
+    }else return node;
 }
 
 int max(bst* node){
@@ -71,6 +82,17 @@ int min(bst* node){
         node = node->Lchild;
     }
     return node->data;
+}
+
+bst* min_node(bst* node){
+    if(node==NULL){
+        cout << "The tree is empty" << endl;
+        return NULL;
+    }
+    while(node->Lchild!=NULL){
+        node = node->Lchild;
+    }
+    return node;
 }
 
 int min_rec(bst* node){
@@ -158,6 +180,50 @@ bool IsBinarysearch(bst* root){
     return IsBSTutil(root , INT_MIN, INT_MAX);
 }
 
+bst* Delete(bst* root, int data){
+    if(root==NULL) return root;
+    else if(data > root->data) root->Rchild = Delete(root->Rchild,data);
+    else if(data < root->data) root->Lchild = Delete(root->Lchild,data);
+    else{
+        if(root->Rchild == NULL && root->Lchild == NULL){
+            delete root;
+            root = NULL;
+        }
+        else if(root->Lchild == NULL){
+            bst* temp = root;
+            root = root ->Rchild;
+        }
+        else if(root->Rchild == NULL){
+            bst* temp = root;
+            root = root->Lchild;
+        }else {
+            root->data = min_rec(root->Rchild);
+            root->Rchild = Delete(root->Rchild,root->data);
+        }
+    }
+    return root;
+}
+
+
+
+bst* inorder_succesor(bst* root, int data){
+    bst* current = find(root,data);
+    if(current==NULL) return NULL;
+    if(current->Rchild!=NULL){
+        return min_node(current->Rchild);
+    }else{
+        bst* successor = NULL;
+        bst* ancestor = root;
+        while(ancestor!=current){
+            if(current->data < ancestor->data){
+                successor = ancestor;
+                ancestor  = ancestor->Lchild;
+            }else 
+                ancestor = ancestor->Rchild;
+        }
+        return successor;
+    }
+}
 
 
 
@@ -165,13 +231,15 @@ int main(){
     root = NULL;
     root = insert(root,15);
     root = insert(root,10);
+    root = insert(root,12);
+    root = insert(root,11);
     root = insert(root,20);
     root = insert(root,25);
     root = insert(root,8);
-    root = insert(root,12);
-    root = insert(root,22);
-    root = insert(root,21);
-    root = insert(root,7);
+    root = insert(root,17);
+    root = insert(root,27);
+    root = insert(root,16);
+    root = insert(root,6);
     Inorder_rec(root);
     cout << endl;
     int num;
@@ -198,4 +266,9 @@ int main(){
         cout<<"The binary tree is binarysearchtree" << endl;
     else
         cout<<"Not binarysearchtree" << endl;
+    root = Delete(root,25);
+    Inorder_rec(root);
+    bst* temp = inorder_succesor(root,25);
+    if(temp!=NULL)
+        cout <<"\nInorder succesor of 12 is "<< temp->data << endl;
 }
