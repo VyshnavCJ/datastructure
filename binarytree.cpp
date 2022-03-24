@@ -100,19 +100,19 @@ void Preorder_rec(BT* ptr){
 }
 
 void Postorder_rec(BT* ptr){
-        if(ptr!=NULL){ 
-                Postorder_rec(ptr->Lchild);
-                Postorder_rec(ptr->Rchild);
+    if(ptr!=NULL){ 
+		Postorder_rec(ptr->Lchild);
+		Postorder_rec(ptr->Rchild);
 		printf("%c\t",ptr->data);
-        }
+	}
 }
 
 void Inorder_rec(BT* ptr){
-        if(ptr!=NULL){ 
-                Inorder_rec(ptr->Lchild);
+	if(ptr!=NULL){ 
+		Inorder_rec(ptr->Lchild);
 		printf("%c\t",ptr->data);
-                Inorder_rec(ptr->Rchild);
-        }
+		Inorder_rec(ptr->Rchild);
+	}
 }
 void Inorder(){
 	BT* ptr = ROOT;
